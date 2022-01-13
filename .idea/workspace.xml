@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9f7607b5-a459-4735-8cfc-79877525740c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ITI TASKS.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/BouncingBall/Ball.class" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/BouncingBall/Ball.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/BouncingBall/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/BouncingBall/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/BouncingBall/BallBoundries.class" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/BouncingBall/BallBoundries.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab4/BouncingBall/BallBoundries.java" beforeDir="false" afterPath="$PROJECT_DIR$/Lab4/BouncingBall/BallBoundries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab1/TestApplet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab3/eren.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab3/eren.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab3/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab3/index2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab4/DateApplet/index.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="23ameUejE0A2D3qYVRv6dP6KnTZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Lab4/src/DateApplet" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Workspace\Java\ITI TASKS\Lab4\src\DateApplet" />
+      <recent name="D:\Workspace\Java\ITI TASKS\Lab4" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9f7607b5-a459-4735-8cfc-79877525740c" name="Changes" comment="" />
+      <created>1641980666743</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1641980666743</updated>
+      <workItem from="1641980668617" duration="2985000" />
+      <workItem from="1641984678191" duration="765000" />
+      <workItem from="1641985608201" duration="39000" />
+      <workItem from="1641985723681" duration="34000" />
+      <workItem from="1641986098581" duration="18000" />
+      <workItem from="1642018688719" duration="133000" />
+      <workItem from="1642018889313" duration="385000" />
+      <workItem from="1642019408163" duration="20000" />
+      <workItem from="1642019967528" duration="3000" />
+      <workItem from="1642019983377" duration="129000" />
+      <workItem from="1642020249465" duration="33000" />
+      <workItem from="1642025840552" duration="127000" />
+      <workItem from="1642029750282" duration="579000" />
+      <workItem from="1642030719451" duration="39000" />
+      <workItem from="1642031022013" duration="1000" />
+      <workItem from="1642032264706" duration="196000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

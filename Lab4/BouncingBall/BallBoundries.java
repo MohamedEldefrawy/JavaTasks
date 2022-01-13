@@ -30,7 +30,7 @@ public class BallBoundries extends Applet implements Runnable
 
 		
 					
-			if( (initBall.getXPos() + (2*initBall.getRadius()) ) == getWidth() )
+			if( (initBall.getXPos() + (2*initBall.getRadius()) ) > getWidth() )
 			{
 				initBall.setXOffset(initBall.getXOffset() * -1);
 				initBall.setYOffset(Math.abs(initBall.getYOffset()));	
@@ -38,19 +38,19 @@ public class BallBoundries extends Applet implements Runnable
 				
 			}
 			
-			if ( (initBall.getXPos()) == 0 )
+			if ( (initBall.getXPos()) > 0 )
 			{
 				initBall.setXOffset(initBall.getXOffset() * -1);
 				initBall.setYOffset(Math.abs(initBall.getYOffset()));
 									
 			}
 			
-			if ( (initBall.getYPos()) == 0 )
+			if ( (initBall.getYPos()) > 0 )
 			{
 				initBall.setYOffset(initBall.getYOffset() * -1);												
 			}
 			
-			 if ( initBall.getYPos() + (2*initBall.getRadius() ) >= getHeight() ) 
+			 if ( initBall.getYPos() + (2*initBall.getRadius() ) > getHeight() ) 
 			{	
 				
 				initBall.setYOffset(initBall.getYOffset() * -1);
