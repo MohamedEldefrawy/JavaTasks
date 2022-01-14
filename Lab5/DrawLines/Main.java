@@ -2,17 +2,18 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Applet {
 
-    private Line[] lines;
+    private List<Line> lines;
     private Line line;
-    private int index;
 
     @Override
     public void init() {
         line = new Line();
-        lines = new Line[10];
+        lines = new ArrayList<Line>();
 
         addMouseListener(line);
         addMouseMotionListener(line);
@@ -21,12 +22,11 @@ public class Main extends Applet {
 
     @Override
     public void paint(Graphics g) {
-        if (index < 10)
+
+        g.drawLine((int) line.x1Pos, (int) line.y1Pos, (int) line.x2Pos, (int) line.y2Pos);
+
+        for (Line line : lines) {
             g.drawLine((int) line.x1Pos, (int) line.y1Pos, (int) line.x2Pos, (int) line.y2Pos);
-
-
-        for (int i = 0; i < index; i++) {
-            g.drawLine((int) lines[i].x1Pos, (int) lines[i].y1Pos, (int) lines[i].x2Pos, (int) lines[i].y2Pos);
         }
     }
 
@@ -57,10 +57,9 @@ public class Main extends Applet {
             x2Pos = e.getX();
             y2Pos = e.getY();
 
-            if (index < 10) {
-                lines[index] = new Line(x1Pos, y1Pos, x2Pos, y2Pos);
-                index++;
-            }
+
+            lines.add(new Line(x1Pos, y1Pos, x2Pos, y2Pos));
+
             repaint();
         }
 
