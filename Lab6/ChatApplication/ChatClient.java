@@ -33,11 +33,9 @@ public class ChatClient {
         textField.grabFocus();
         textField.requestFocus();
 
-        try {
-            establishConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        establishConnection();
+
 
         sendButton = new JButton("Send");
 
@@ -52,7 +50,7 @@ public class ChatClient {
                         "Are you sure you want to close this window?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    closeSessions();
+                    closeSocket();
                     System.out.println("closing");
                     System.exit(0);
                 }
@@ -70,14 +68,21 @@ public class ChatClient {
         thread.start();
     }
 
-    private void closeSessions() {
+    private void closeSocket() {
         try {
-//            if (inputStream != null)
-            inputStream.close();
-//            if (outputStream != null)
-            outputStream.close();
-//            if (socket != null)
-            socket.close();
+            if (socket != null)
+                socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeIoSession() {
+        try {
+            if (inputStream != null)
+                inputStream.close();
+            if (outputStream != null)
+                outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,14 +100,18 @@ public class ChatClient {
             outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            closeSessions();
         }
     }
 
-    private void establishConnection() throws IOException {
-        socket = new Socket(InetAddress.getLocalHost(), 2021);
-        outputStream = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    private void establishConnection() {
+        try {
+            socket = new Socket(InetAddress.getLocalHost(), 2021);
+            outputStream = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -115,7 +124,6 @@ public class ChatClient {
                     textArea.append(messageFromOthers + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
-                    closeSessions();
                 }
             }
 
@@ -128,6 +136,3 @@ public class ChatClient {
     }
 
 }
-
-
-

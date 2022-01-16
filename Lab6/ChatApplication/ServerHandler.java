@@ -8,7 +8,6 @@ public class ServerHandler {
 
     // Sockets
     private ServerSocket serverSocket;
-    static Thread thread;
 
 
     private static final ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -26,9 +25,10 @@ public class ServerHandler {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has been connected");
-                ClientHandler clientHandler = new ClientHandler(socket);
 
-                thread = new Thread(clientHandler);
+
+                ClientHandler clientHandler = new ClientHandler(socket);
+                Thread thread = new Thread(clientHandler);
                 thread.start();
 
             }
@@ -101,14 +101,13 @@ public class ServerHandler {
             while (socket.isConnected()) {
                 try {
                     String messageFromClient = inputStream.readLine();
-                    broadcast(messageFromClient);
+                    if (messageFromClient != null)
+                        broadcast(messageFromClient);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    thread.stop();
                     closeStreams();
                 }
             }
         }
     }
 }
-
