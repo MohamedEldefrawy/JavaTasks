@@ -35,6 +35,7 @@ public class Main extends Applet {
         double y1Pos;
         double x2Pos;
         double y2Pos;
+        boolean isDragged = false;
 
         public Line(double x1Pos, double y1Pos, double x2Pos, double y2Pos) {
             this.x1Pos = x1Pos;
@@ -57,7 +58,7 @@ public class Main extends Applet {
             x2Pos = e.getX();
             y2Pos = e.getY();
 
-            if (index < 10) {
+            if (index < 10 && isDragged) {
                 lines[index] = new Line(x1Pos, y1Pos, x2Pos, y2Pos);
                 index++;
             }
@@ -66,6 +67,7 @@ public class Main extends Applet {
 
         @Override
         public void mouseDragged(MouseEvent e) {
+            isDragged = true;
             x2Pos = e.getX();
             y2Pos = e.getY();
             repaint();

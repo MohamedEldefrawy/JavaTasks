@@ -56,10 +56,6 @@ public class Main extends Applet {
         public void mouseReleased(MouseEvent e) {
             x2Pos = e.getX();
             y2Pos = e.getY();
-
-
-            lines.add(new Line(x1Pos, y1Pos, x2Pos, y2Pos));
-
             repaint();
         }
 
@@ -67,6 +63,7 @@ public class Main extends Applet {
         public void mouseDragged(MouseEvent e) {
             x2Pos = e.getX();
             y2Pos = e.getY();
+            isDragged = true;
             repaint();
         }
 

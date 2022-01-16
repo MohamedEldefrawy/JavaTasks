@@ -41,8 +41,6 @@ public class Main extends Applet {
         for (Ball ball : balls) {
             g.fillOval(ball.xPos, ball.yPos, ball.radius * 2, ball.radius * 2);
         }
-
-
     }
 
     private class RepaintHandler implements Runnable {
