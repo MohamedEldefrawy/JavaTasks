@@ -1,0 +1,19 @@
+.linear-grad-to-bottom{
+    /*-fx-fill: linear-gradient(transparent 20%, red 100%);*/
+    -fx-fill: linear-gradient(reflect,Black, White, Black);
+}
+
+.text
+{
+    -fx-fill: red;
+    -fx-font-size: 24pt ;
+        -fx-fill: linear-gradient(reflect);
+}
+
+.reflectedText {
+    -fx-fill: linear-gradient(transparent 20%, red 100%);
+    -fx-font-size: 24pt;
+    -fx-translate-y: 30;
+    -fx-scale-y: -1;
+    -fx-opacity: 0.8;
+}
