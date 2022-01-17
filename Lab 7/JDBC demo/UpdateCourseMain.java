@@ -8,7 +8,7 @@ public class UpdateCourseMain {
 
         try {
             preparedStatement.setString(1, "Dafro");
-            preparedStatement.setInt(2, 6);
+            preparedStatement.setInt(2, 7);
             preparedStatement.addBatch();
             int count[] = preparedStatement.executeBatch();
 
