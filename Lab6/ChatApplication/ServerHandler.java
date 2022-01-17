@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 
@@ -8,105 +9,92 @@ public class ServerHandler {
 
     // Sockets
     private ServerSocket serverSocket;
-
-
-    private static final ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+//    Socket socket;
 
     public ServerHandler() {
         try {
             serverSocket = new ServerSocket(2021);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void startServer() {
-        try {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
-                System.out.println("A new client has been connected");
-
-
-                ClientHandler clientHandler = new ClientHandler(socket);
-                Thread thread = new Thread(clientHandler);
-                thread.start();
-
+                new ClientHandler(socket);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static class ClientHandler implements Runnable {
+}
 
-        private final Socket socket;
+class ClientHandler extends Thread {
 
-        // IO streams
-        public BufferedReader inputStream;
-        public BufferedWriter outputStream;
+    private static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
 
 
-        public ClientHandler(Socket socket) {
-            this.socket = socket;
+    // IO streams
+    DataInputStream dStream;
+    PrintStream pStream;
+    private Socket socket;
 
+
+    public ClientHandler(Socket socket) {
+        this.socket = socket;
+
+        try {
+
+            dStream = new DataInputStream(socket.getInputStream());
+            pStream = new PrintStream(socket.getOutputStream());
+            clientHandlers.add(this);
+
+            start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            closeStreams();
+        }
+    }
+
+    private void closeStreams() {
+        try {
+            if (dStream != null)
+                dStream.close();
+            if (pStream != null)
+                pStream.close();
+            if (socket != null)
+                socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        removeClientHandler();
+    }
+
+    public void broadcast(String message) throws IOException {
+        for (ClientHandler clientHandler : clientHandlers) {
+            clientHandler.pStream.println(message);
+        }
+    }
+
+    public void removeClientHandler() {
+        clientHandlers.remove(this);
+        System.out.println("Chat client has been closed");
+    }
+
+    @Override
+    public void run() {
+
+        while (socket.isConnected()) {
             try {
-                outputStream = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-                inputStream = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-                System.out.println(inputStream.readLine());
-
-                clientHandlers.add(this);
-
+                String messageFromClient = dStream.readLine();
+                if (messageFromClient != null) {
+                    broadcast(messageFromClient);
+                    System.out.println(messageFromClient);
+                } else
+                    socket.close();
+            } catch (SocketException e) {
+                System.out.println("Client has been closed");
             } catch (IOException e) {
                 e.printStackTrace();
                 closeStreams();
-            }
-        }
-
-        private void closeStreams() {
-            try {
-                if (inputStream != null)
-                    inputStream.close();
-                if (outputStream != null)
-                    outputStream.close();
-                if (socket != null)
-                    socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            removeClientHandler();
-        }
-
-        public void broadcast(String message) throws IOException {
-            for (ClientHandler clientHandler : clientHandlers) {
-                try {
-                    clientHandler.outputStream.write(message);
-                    clientHandler.outputStream.newLine();
-                    clientHandler.outputStream.flush();
-                } catch (IOException e) {
-
-                    closeStreams();
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        public void removeClientHandler() {
-            clientHandlers.remove(this);
-            System.out.println("Chat client has been closed");
-        }
-
-        @Override
-        public void run() {
-
-            while (socket.isConnected()) {
-                try {
-                    String messageFromClient = inputStream.readLine();
-                    if (messageFromClient != null)
-                        broadcast(messageFromClient);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    closeStreams();
-                }
             }
         }
     }

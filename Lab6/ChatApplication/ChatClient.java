@@ -2,15 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ChatClient {
 
     private Socket socket;
-    private BufferedReader inputStream;
-    private BufferedWriter outputStream;
+    DataInputStream dStream;
+    PrintStream pStream;
 
 
     JFrame frame = new JFrame();
@@ -18,8 +21,6 @@ public class ChatClient {
     JScrollPane scrollPane;
     JTextField textField;
     JButton sendButton;
-
-    Thread thread;
 
 
     public ChatClient() {
@@ -40,7 +41,7 @@ public class ChatClient {
         sendButton = new JButton("Send");
 
         sendButton.addActionListener(ae -> {
-            sendText(textArea, textField);
+            sendText(textField);
         });
 
         frame.addWindowListener(new WindowAdapter() {
@@ -55,17 +56,13 @@ public class ChatClient {
                     System.exit(0);
                 }
             }
-
         });
 
         frame.add(scrollPane);
         frame.add(textField);
         frame.add(sendButton);
 
-        MessageListener messageListener = new MessageListener();
-
-        thread = new Thread(messageListener);
-        thread.start();
+        new MessageListener();
     }
 
     private void closeSocket() {
@@ -77,37 +74,19 @@ public class ChatClient {
         }
     }
 
-    private void closeIoSession() {
-        try {
-            if (inputStream != null)
-                inputStream.close();
-            if (outputStream != null)
-                outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void sendText(JTextArea textArea, JTextField textField) {
+    private void sendText(JTextField textField) {
 
-        textArea.append(textField.getText() + "\n");
         String message = textField.getText();
+        pStream.println(message);
         textField.setText("");
-
-        try {
-            outputStream.write(message);
-            outputStream.newLine();
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void establishConnection() {
         try {
             socket = new Socket(InetAddress.getLocalHost(), 2021);
-            outputStream = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            dStream = new DataInputStream(socket.getInputStream());
+            pStream = new PrintStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,23 +94,27 @@ public class ChatClient {
     }
 
 
-    public class MessageListener implements Runnable {
+    public class MessageListener extends Thread {
 
-        public void listenForMessage() {
-            while (socket.isConnected()) {
-                try {
-                    String messageFromOthers = inputStream.readLine();
-                    textArea.append(messageFromOthers + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
 
+        public MessageListener() {
+            start();
         }
 
         @Override
         public void run() {
-            listenForMessage();
+            while (socket.isConnected()) {
+                try {
+                    String messageFromOthers = dStream.readLine();
+                    System.out.println(messageFromOthers);
+                    textArea.append(messageFromOthers + "\n");
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                    break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
