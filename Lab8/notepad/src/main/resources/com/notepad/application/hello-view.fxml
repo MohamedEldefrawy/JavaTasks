@@ -25,9 +25,9 @@
                     <items>
                         <MenuItem fx:id="btnUndo" mnemonicParsing="false" onAction="#btnUndoClicked" text="Undo    CTRL+Z" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut    CTRL+X" />
-                        <MenuItem mnemonicParsing="false" text="Copy  CTRL+C" />
-                        <MenuItem mnemonicParsing="false" text="Past    CTRL+V" />
+                        <MenuItem fx:id="btnCut" mnemonicParsing="false" onAction="#btnCutClicked" text="Cut    CTRL+X" />
+                        <MenuItem fx:id="btnCopy" mnemonicParsing="false" onAction="#btnCopyClicked" text="Copy  CTRL+C" />
+                        <MenuItem fx:id="btnPast" mnemonicParsing="false" onAction="#btnPastClicked" text="Past    CTRL+V" />
                         <MenuItem mnemonicParsing="false" text="Delete    DEL" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Search With Bing" />
