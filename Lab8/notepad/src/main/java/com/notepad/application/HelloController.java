@@ -2,6 +2,9 @@ package com.notepad.application;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -12,6 +15,8 @@ public class HelloController implements Initializable {
     public MenuItem btnNew;
     public TextArea txtNotePadArea;
     public Alert alertDialog;
+    public FileChooser openFileDialog;
+    private Stage stage;
 
     // Listeners
     public void btnNewClicked() {
@@ -36,6 +41,16 @@ public class HelloController implements Initializable {
         return alertDialog;
     }
 
+    private FileChooser createOpenFIleDialog() {
+        FileChooser openFileDialog = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+
+        openFileDialog.getExtensionFilters().add(extFilter);
+        openFileDialog.setTitle("Select text file");
+
+        return openFileDialog;
+    }
+
 
     // Initialize Events
     @Override
@@ -46,13 +61,19 @@ public class HelloController implements Initializable {
     // Handlers
     private void btnNewHandler() {
         alertDialog = createConfirmationDialog();
+        openFileDialog = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+
 
         if (!(txtNotePadArea.getText().isEmpty())) {
 
             Optional<ButtonType> result = alertDialog.showAndWait();
 
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+
                 // Save text file
+                openFileDialog = createOpenFIleDialog();
+                openFileDialog.showOpenDialog(stage);
                 System.out.println("Ok selected");
 
             } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO) {
@@ -62,5 +83,9 @@ public class HelloController implements Initializable {
             }
         } else
             this.txtNotePadArea.clear();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }
