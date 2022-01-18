@@ -34,8 +34,7 @@ public class TextFileReader {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 reader.close();
             } catch (IOException e) {

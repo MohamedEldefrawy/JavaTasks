@@ -11,6 +11,7 @@ public class TextFileWriter {
     private String content;
 
     public TextFileWriter(File file) {
+
         String fileName = file.getAbsolutePath();
 
         // Create file if not exists

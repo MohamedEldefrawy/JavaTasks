@@ -24,7 +24,9 @@ public class HelloController implements Initializable {
     public Alert alertDialog;
     public MenuItem btnOpen;
     public MenuItem btnNewWindow;
+    public MenuItem btnSave;
     private Stage stage;
+    private File currentFile;
 
 
     // Setters
@@ -39,6 +41,7 @@ public class HelloController implements Initializable {
         btnNew.setOnAction(event -> btnNewHandler());
         btnOpen.setOnAction(event -> btnOpenHandler());
         btnNewWindow.setOnAction(event -> btnNewWindowClicked());
+        btnSave.setOnAction(event -> btnSaveClicked());
     }
 
 
@@ -64,6 +67,25 @@ public class HelloController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void btnSaveClicked() {
+
+        if (currentFile == null || currentFile.getName().isEmpty()) {
+            currentFile = createFileDialog(Dialogs.SAVE);
+            if (currentFile != null) {
+                TextFileWriter writer = new TextFileWriter(currentFile);
+                writer.setContent(txtNotePadArea.getText());
+                writer.saveFile();
+                HelloApplication.getStage().setTitle(currentFile.getName().substring(0, currentFile.getName().length() - 4));
+            }
+
+        } else {
+            TextFileWriter writer = new TextFileWriter(currentFile);
+            writer.setContent(txtNotePadArea.getText());
+            writer.saveFile();
+        }
+
     }
 
 
@@ -141,7 +163,6 @@ public class HelloController implements Initializable {
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                 // Save text file
                 TextFileWriter writer = new TextFileWriter(createFileDialog(Dialogs.SAVE));
-                System.out.println(txtNotePadArea.getText());
                 writer.setContent(txtNotePadArea.getText());
                 writer.saveFile();
 

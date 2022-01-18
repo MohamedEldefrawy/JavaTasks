@@ -12,7 +12,7 @@
                         <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#btnNewClicked" text="New" />
                         <MenuItem fx:id="btnNewWindow" mnemonicParsing="false" onAction="#btnNewWindowClicked" text="New Window" />
                         <MenuItem fx:id="btnOpen" mnemonicParsing="false" onAction="#btnOpenClicked" text="Open" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" text="Save" />
                         <MenuItem mnemonicParsing="false" text="Save As" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Page Setup" />
