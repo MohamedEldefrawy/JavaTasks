@@ -5,6 +5,8 @@ import com.notepad.utilities.TextFileReader;
 import com.notepad.utilities.TextFileWriter;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -25,6 +27,9 @@ public class HelloController implements Initializable {
     public MenuItem btnOpen;
     public MenuItem btnNewWindow;
     public MenuItem btnSave;
+    public MenuItem btnSaveAs;
+    public MenuItem btnPageSetup;
+    public MenuItem btnPrint;
     private Stage stage;
     private File currentFile;
 
@@ -42,8 +47,10 @@ public class HelloController implements Initializable {
         btnOpen.setOnAction(event -> btnOpenHandler());
         btnNewWindow.setOnAction(event -> btnNewWindowClicked());
         btnSave.setOnAction(event -> btnSaveClicked());
+        btnSaveAs.setOnAction(event -> btnSaveAsClicked());
+        btnPageSetup.setOnAction(event -> btnPageSetupClicked());
+        btnPrint.setOnAction(actionEvent -> btnPrintClicked());
     }
-
 
     // Listeners
     public void btnNewClicked() {
@@ -72,13 +79,7 @@ public class HelloController implements Initializable {
     public void btnSaveClicked() {
 
         if (currentFile == null || currentFile.getName().isEmpty()) {
-            currentFile = createFileDialog(Dialogs.SAVE);
-            if (currentFile != null) {
-                TextFileWriter writer = new TextFileWriter(currentFile);
-                writer.setContent(txtNotePadArea.getText());
-                writer.saveFile();
-                HelloApplication.getStage().setTitle(currentFile.getName().substring(0, currentFile.getName().length() - 4));
-            }
+            SaveAsFile();
 
         } else {
             TextFileWriter writer = new TextFileWriter(currentFile);
@@ -86,6 +87,34 @@ public class HelloController implements Initializable {
             writer.saveFile();
         }
 
+    }
+
+    public void btnSaveAsClicked() {
+        SaveAsFile();
+    }
+
+    public void btnPageSetupClicked() {
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job == null) {
+            return;
+        }
+
+        // Show the page setup dialog
+        boolean proceed = job.showPageSetupDialog(stage);
+
+        if (proceed) {
+            print(job, txtNotePadArea);
+        }
+    }
+
+    public void btnPrintClicked() {
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null && job.showPrintDialog(HelloApplication.getStage().getScene().getWindow())) {
+            boolean success = job.printPage(txtNotePadArea);
+            if (success) {
+                job.endJob();
+            }
+        }
     }
 
 
@@ -122,11 +151,31 @@ public class HelloController implements Initializable {
 
         return alertDialog;
     }
+
     private void readFromTxtFile() {
         File file = createFileDialog(Dialogs.OPEN);
         if (file != null) {
             TextFileReader reader = new TextFileReader(file);
             txtNotePadArea.setText(reader.fileContent());
+        }
+    }
+
+    private void SaveAsFile() {
+        currentFile = createFileDialog(Dialogs.SAVE);
+        if (currentFile != null) {
+            TextFileWriter writer = new TextFileWriter(currentFile);
+            writer.setContent(txtNotePadArea.getText());
+            writer.saveFile();
+            HelloApplication.getStage().setTitle(currentFile.getName().substring(0, currentFile.getName().length() - 4));
+        }
+    }
+
+    private void print(PrinterJob job, Node node) {
+        // Print the node
+        boolean printed = job.printPage(node);
+
+        if (printed) {
+            job.endJob();
         }
     }
 
