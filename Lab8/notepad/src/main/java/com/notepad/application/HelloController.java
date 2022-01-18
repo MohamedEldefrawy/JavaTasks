@@ -32,6 +32,7 @@ public class HelloController implements Initializable {
     public MenuItem btnPageSetup;
     public MenuItem btnPrint;
     public MenuItem btnExit;
+    public MenuItem btnUndo;
     private Stage stage;
     private File currentFile;
 
@@ -53,6 +54,7 @@ public class HelloController implements Initializable {
         btnPageSetup.setOnAction(event -> btnPageSetupClicked());
         btnPrint.setOnAction(actionEvent -> btnPrintClicked());
         btnExit.setOnAction(actionEvent -> btnExitClicked());
+        btnUndo.setOnAction(actionEvent -> btnUndoClicked());
     }
 
 
@@ -125,7 +127,7 @@ public class HelloController implements Initializable {
         if (txtNotePadArea.getText().isEmpty()) {
             Platform.exit();
         } else {
-            Alert alert = createConfirmationDialog();
+            createConfirmationDialog();
             Optional<ButtonType> result = alertDialog.showAndWait();
 
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
@@ -137,6 +139,10 @@ public class HelloController implements Initializable {
             }
         }
 
+    }
+
+    public void btnUndoClicked() {
+        txtNotePadArea.undo();
     }
 
 
