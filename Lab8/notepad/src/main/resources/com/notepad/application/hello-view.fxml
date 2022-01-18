@@ -11,7 +11,7 @@
                     <items>
                         <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#btnNewClicked" text="New" />
                         <MenuItem mnemonicParsing="false" text="New Window" />
-                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem fx:id="btnOpen" mnemonicParsing="false" onAction="#btnOpenClicked" text="Open" />
                         <MenuItem mnemonicParsing="false" text="Save" />
                         <MenuItem mnemonicParsing="false" text="Save As" />
                         <SeparatorMenuItem mnemonicParsing="false" />

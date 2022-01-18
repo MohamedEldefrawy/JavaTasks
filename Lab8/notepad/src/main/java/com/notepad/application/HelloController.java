@@ -1,5 +1,7 @@
 package com.notepad.application;
 
+import com.notepad.utilities.Dialogs;
+import com.notepad.utilities.TextFileReader;
 import com.notepad.utilities.TextFileWriter;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -17,6 +19,8 @@ public class HelloController implements Initializable {
     public TextArea txtNotePadArea;
     public Alert alertDialog;
     public FileChooser openFileDialog;
+    public FileChooser saveFileDialog;
+    public MenuItem btnOpen;
     private Stage stage;
 
     // Listeners
@@ -25,7 +29,34 @@ public class HelloController implements Initializable {
         btnNew.setOnAction(event -> btnNewHandler());
     }
 
+    public void btnOpenClicked() {
+        btnOpen.setOnAction(event -> btnOpenHandler());
+    }
+
+
     // Utilities
+
+    private FileChooser createFileDialog(String dialogType) {
+        FileChooser FileDialog = new FileChooser();
+
+        if (dialogType.toUpperCase().equals(Dialogs.SAVE)) {
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+
+            FileDialog.getExtensionFilters().add(extFilter);
+            FileDialog.setTitle("Select text file");
+
+        } else {
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+
+            FileDialog.getExtensionFilters().add(extFilter);
+            FileDialog.setTitle("Select text file");
+        }
+
+        return FileDialog;
+
+    }
+
+
     private Alert createConfirmationDialog() {
         alertDialog = new Alert(Alert.AlertType.CONFIRMATION);
         alertDialog.setContentText("");
@@ -42,27 +73,17 @@ public class HelloController implements Initializable {
         return alertDialog;
     }
 
-    private FileChooser createSaveFileDialog() {
-        FileChooser openFileDialog = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-
-        openFileDialog.getExtensionFilters().add(extFilter);
-        openFileDialog.setTitle("Select text file");
-
-        return openFileDialog;
-    }
-
-
     // Initialize Events
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnNew.setOnAction(event -> btnNewHandler());
+        btnOpen.setOnAction(event -> btnOpenHandler());
     }
 
     // Handlers
     private void btnNewHandler() {
+
         alertDialog = createConfirmationDialog();
-        openFileDialog = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
 
         if (!(txtNotePadArea.getText().isEmpty())) {
@@ -72,9 +93,9 @@ public class HelloController implements Initializable {
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
 
                 // Save text file
-                openFileDialog = createSaveFileDialog();
+                saveFileDialog = createFileDialog(Dialogs.SAVE.toString());
 
-                TextFileWriter writer = new TextFileWriter(openFileDialog.showSaveDialog(stage));
+                TextFileWriter writer = new TextFileWriter(saveFileDialog.showSaveDialog(stage));
                 writer.setContent(txtNotePadArea.getText());
                 writer.saveFile();
                 txtNotePadArea.clear();
@@ -88,6 +109,36 @@ public class HelloController implements Initializable {
             }
         } else
             this.txtNotePadArea.clear();
+    }
+
+
+    private void btnOpenHandler() {
+
+        alertDialog = createConfirmationDialog();
+
+        if (!(txtNotePadArea.getText().isEmpty())) {
+            Optional<ButtonType> result = alertDialog.showAndWait();
+            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+
+                // Save text file
+                saveFileDialog = createFileDialog(Dialogs.SAVE.toString());
+                openFileDialog = createFileDialog(Dialogs.OPEN.toString());
+
+                TextFileWriter writer = new TextFileWriter(saveFileDialog.showSaveDialog(stage));
+                writer.setContent(txtNotePadArea.getText());
+                writer.saveFile();
+
+            } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO) {
+                TextFileReader reader = new TextFileReader(openFileDialog.showOpenDialog(stage));
+                txtNotePadArea.setText(reader.fileContent());
+            } else if (result.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                alertDialog.close();
+            }
+        } else {
+            openFileDialog = createFileDialog(Dialogs.OPEN.toString());
+            TextFileReader reader = new TextFileReader(openFileDialog.showOpenDialog(stage));
+            txtNotePadArea.setText(reader.fileContent());
+        }
     }
 
     public void setStage(Stage stage) {
