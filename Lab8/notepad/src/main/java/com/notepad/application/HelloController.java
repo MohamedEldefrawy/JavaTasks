@@ -39,6 +39,7 @@ public class HelloController implements Initializable {
     public MenuItem btnCut;
     public MenuItem btnPast;
     public MenuItem btnCopy;
+    public MenuItem btnDelete;
     private Stage stage;
     private File currentFile;
     private String selectedText;
@@ -65,6 +66,7 @@ public class HelloController implements Initializable {
         btnCut.setOnAction(actionEvent -> btnCutClicked());
         btnPast.setOnAction(actionEvent -> btnPastClicked());
         btnCopy.setOnAction(actionEvent -> btnCopyClicked());
+        btnDelete.setOnAction(actionEvent -> btnDeleteClicked());
 
         btnNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         btnOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -173,6 +175,14 @@ public class HelloController implements Initializable {
 
     public void btnCopyClicked() {
         selectedText = txtNotePadArea.getSelectedText();
+    }
+
+    public void btnDeleteClicked() {
+        if (!txtNotePadArea.getSelectedText().equals("")) {
+            txtNotePadArea.replaceSelection("");
+        } else {
+            txtNotePadArea.deleteNextChar();
+        }
     }
 
 
