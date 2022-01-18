@@ -11,14 +11,6 @@ public class TextFileWriter {
     FileWriter fileWriter;
     private String content;
 
-    public BufferedWriter getWriter() {
-        return writer;
-    }
-
-    public void setWriter(BufferedWriter writer) {
-        this.writer = writer;
-    }
-
     public TextFileWriter(File file) {
         this.file = file;
         String fileName = file.getAbsolutePath();
@@ -26,9 +18,7 @@ public class TextFileWriter {
         // Create file if not exists
         if (!file.exists()) {
             try {
-                boolean result = file.createNewFile();
-                if (result)
-                    System.out.println("Created ");
+                file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -37,15 +27,10 @@ public class TextFileWriter {
         // Initialize file streams
         try {
             fileWriter = new FileWriter(fileName);
-            System.out.println(fileName);
             this.writer = new BufferedWriter(fileWriter);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getContent() {
-        return content;
     }
 
     public void setContent(String content) {

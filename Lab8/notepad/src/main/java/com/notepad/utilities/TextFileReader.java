@@ -10,7 +10,7 @@ public class TextFileReader {
     private BufferedReader reader;
     private File file;
     private String fileName;
-    private String content;
+    private String content = "";
 
     public TextFileReader(File file) {
         this.file = file;
