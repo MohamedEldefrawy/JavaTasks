@@ -9,26 +9,26 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#btnNewClicked" text="New" />
-                        <MenuItem fx:id="btnNewWindow" mnemonicParsing="false" onAction="#btnNewWindowClicked" text="New Window" />
-                        <MenuItem fx:id="btnOpen" mnemonicParsing="false" onAction="#btnOpenClicked" text="Open" />
-                        <MenuItem fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" text="Save" />
-                        <MenuItem fx:id="btnSaveAs" mnemonicParsing="false" onAction="#btnSaveAsClicked" text="Save As" />
+                        <MenuItem fx:id="btnNew" mnemonicParsing="false" onAction="#btnNewClicked" text="New    CTRL+N  " />
+                        <MenuItem fx:id="btnNewWindow" mnemonicParsing="false" onAction="#btnNewWindowClicked" text="New Window    CTRL+SHIFT+N" />
+                        <MenuItem fx:id="btnOpen" mnemonicParsing="false" onAction="#btnOpenClicked" text="Open    CTRL+O" />
+                        <MenuItem fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" text="Save    CTRL+S" />
+                        <MenuItem fx:id="btnSaveAs" mnemonicParsing="false" onAction="#btnSaveAsClicked" text="Save As    CTRL+SHIFT+S" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="btnPageSetup" mnemonicParsing="false" onAction="#btnPageSetupClicked" text="Page Setup" />
-                        <MenuItem fx:id="btnPrint" mnemonicParsing="false" onAction="#btnPrintClicked" text="Print" />
+                        <MenuItem fx:id="btnPrint" mnemonicParsing="false" onAction="#btnPrintClicked" text="Print    CTRL+P" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="btnExit" mnemonicParsing="false" onAction="#btnExitClicked" text="Exit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem fx:id="btnUndo" mnemonicParsing="false" onAction="#btnUndoClicked" text="Undo" />
+                        <MenuItem fx:id="btnUndo" mnemonicParsing="false" onAction="#btnUndoClicked" text="Undo    CTRL+Z" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Past" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Cut    CTRL+X" />
+                        <MenuItem mnemonicParsing="false" text="Copy  CTRL+C" />
+                        <MenuItem mnemonicParsing="false" text="Past    CTRL+V" />
+                        <MenuItem mnemonicParsing="false" text="Delete    DEL" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Search With Bing" />
                         <MenuItem mnemonicParsing="false" text="Find" />
