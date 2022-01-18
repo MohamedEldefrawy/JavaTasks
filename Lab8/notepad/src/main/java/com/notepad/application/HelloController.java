@@ -3,6 +3,7 @@ package com.notepad.application;
 import com.notepad.utilities.Dialogs;
 import com.notepad.utilities.TextFileReader;
 import com.notepad.utilities.TextFileWriter;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.print.PrinterJob;
@@ -30,6 +31,7 @@ public class HelloController implements Initializable {
     public MenuItem btnSaveAs;
     public MenuItem btnPageSetup;
     public MenuItem btnPrint;
+    public MenuItem btnExit;
     private Stage stage;
     private File currentFile;
 
@@ -50,7 +52,9 @@ public class HelloController implements Initializable {
         btnSaveAs.setOnAction(event -> btnSaveAsClicked());
         btnPageSetup.setOnAction(event -> btnPageSetupClicked());
         btnPrint.setOnAction(actionEvent -> btnPrintClicked());
+        btnExit.setOnAction(actionEvent -> btnExitClicked());
     }
+
 
     // Listeners
     public void btnNewClicked() {
@@ -79,7 +83,7 @@ public class HelloController implements Initializable {
     public void btnSaveClicked() {
 
         if (currentFile == null || currentFile.getName().isEmpty()) {
-            SaveAsFile();
+            saveAsFile();
 
         } else {
             TextFileWriter writer = new TextFileWriter(currentFile);
@@ -90,7 +94,7 @@ public class HelloController implements Initializable {
     }
 
     public void btnSaveAsClicked() {
-        SaveAsFile();
+        saveAsFile();
     }
 
     public void btnPageSetupClicked() {
@@ -117,6 +121,24 @@ public class HelloController implements Initializable {
         }
     }
 
+    public void btnExitClicked() {
+        if (txtNotePadArea.getText().isEmpty()) {
+            Platform.exit();
+        } else {
+            Alert alert = createConfirmationDialog();
+            Optional<ButtonType> result = alertDialog.showAndWait();
+
+            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                saveAsFile();
+            } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO) {
+                Platform.exit();
+            } else if (result.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                alertDialog.close();
+            }
+        }
+
+    }
+
 
     // Helpers
     private File createFileDialog(Dialogs dialogType) {
@@ -136,6 +158,7 @@ public class HelloController implements Initializable {
         }
 
     }
+
     private Alert createConfirmationDialog() {
         alertDialog = new Alert(Alert.AlertType.CONFIRMATION);
         alertDialog.setContentText("");
@@ -160,7 +183,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    private void SaveAsFile() {
+    private void saveAsFile() {
         currentFile = createFileDialog(Dialogs.SAVE);
         if (currentFile != null) {
             TextFileWriter writer = new TextFileWriter(currentFile);
@@ -203,6 +226,7 @@ public class HelloController implements Initializable {
         } else
             this.txtNotePadArea.clear();
     }
+
     private void btnOpenHandler() {
 
         alertDialog = createConfirmationDialog();

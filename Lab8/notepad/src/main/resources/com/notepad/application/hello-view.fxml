@@ -18,7 +18,7 @@
                         <MenuItem fx:id="btnPageSetup" mnemonicParsing="false" onAction="#btnPageSetupClicked" text="Page Setup" />
                         <MenuItem fx:id="btnPrint" mnemonicParsing="false" onAction="#btnPrintClicked" text="Print" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Exit" />
+                        <MenuItem fx:id="btnExit" mnemonicParsing="false" onAction="#btnExitClicked" text="Exit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
