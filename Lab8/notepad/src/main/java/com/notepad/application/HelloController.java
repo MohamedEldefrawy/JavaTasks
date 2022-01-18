@@ -1,5 +1,6 @@
 package com.notepad.application;
 
+import com.notepad.utilities.TextFileWriter;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -41,7 +42,7 @@ public class HelloController implements Initializable {
         return alertDialog;
     }
 
-    private FileChooser createOpenFIleDialog() {
+    private FileChooser createSaveFileDialog() {
         FileChooser openFileDialog = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
 
@@ -72,8 +73,13 @@ public class HelloController implements Initializable {
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
 
                 // Save text file
-                openFileDialog = createOpenFIleDialog();
-                openFileDialog.showOpenDialog(stage);
+                openFileDialog = createSaveFileDialog();
+
+                TextFileWriter writer = new TextFileWriter(openFileDialog.showSaveDialog(stage));
+                writer.setContent(txtNotePadArea.getText());
+                writer.saveFile();
+                txtNotePadArea.clear();
+
                 System.out.println("Ok selected");
 
             } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO) {
