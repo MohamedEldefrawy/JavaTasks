@@ -7,12 +7,10 @@ import java.io.IOException;
 
 public class TextFileWriter {
     private BufferedWriter writer;
-    private File file;
     FileWriter fileWriter;
     private String content;
 
     public TextFileWriter(File file) {
-        this.file = file;
         String fileName = file.getAbsolutePath();
 
         // Create file if not exists

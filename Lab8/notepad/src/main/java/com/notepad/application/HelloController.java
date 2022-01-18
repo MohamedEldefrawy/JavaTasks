@@ -3,11 +3,15 @@ package com.notepad.application;
 import com.notepad.utilities.Dialogs;
 import com.notepad.utilities.TextFileReader;
 import com.notepad.utilities.TextFileWriter;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -19,11 +23,27 @@ public class HelloController implements Initializable {
     public TextArea txtNotePadArea;
     public Alert alertDialog;
     public MenuItem btnOpen;
+    public MenuItem btnNewWindow;
     private Stage stage;
+
+
+    // Setters
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+
+    // Initialize Events
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        btnNew.setOnAction(event -> btnNewHandler());
+        btnOpen.setOnAction(event -> btnOpenHandler());
+        btnNewWindow.setOnAction(event -> btnNewWindowClicked());
+    }
+
 
     // Listeners
     public void btnNewClicked() {
-
         btnNew.setOnAction(event -> btnNewHandler());
     }
 
@@ -31,9 +51,23 @@ public class HelloController implements Initializable {
         btnOpen.setOnAction(event -> btnOpenHandler());
     }
 
+    public void btnNewWindowClicked() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(fxmlLoader.load(), 400, 400);
+            stage.setTitle("New note");
+            stage.setScene(scene);
+            HelloController controller = new HelloController();
+            controller.setStage(stage);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    // Utilities
 
+    // Helpers
     private File createFileDialog(Dialogs dialogType) {
         FileChooser FileDialog = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -51,7 +85,6 @@ public class HelloController implements Initializable {
         }
 
     }
-
     private Alert createConfirmationDialog() {
         alertDialog = new Alert(Alert.AlertType.CONFIRMATION);
         alertDialog.setContentText("");
@@ -67,8 +100,6 @@ public class HelloController implements Initializable {
 
         return alertDialog;
     }
-
-
     private void readFromTxtFile() {
         File file = createFileDialog(Dialogs.OPEN);
         if (file != null) {
@@ -77,14 +108,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    // Initialize Events
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnNew.setOnAction(event -> btnNewHandler());
-        btnOpen.setOnAction(event -> btnOpenHandler());
-    }
-
-    // Handlers
+    // Event Handlers
     private void btnNewHandler() {
 
         alertDialog = createConfirmationDialog();
@@ -108,8 +132,6 @@ public class HelloController implements Initializable {
         } else
             this.txtNotePadArea.clear();
     }
-
-
     private void btnOpenHandler() {
 
         alertDialog = createConfirmationDialog();
@@ -135,8 +157,4 @@ public class HelloController implements Initializable {
         }
     }
 
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 }

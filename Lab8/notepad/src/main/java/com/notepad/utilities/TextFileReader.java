@@ -8,12 +8,10 @@ import java.io.IOException;
 public class TextFileReader {
     private FileReader fileReader;
     private BufferedReader reader;
-    private File file;
     private String fileName;
     private String content = "";
 
     public TextFileReader(File file) {
-        this.file = file;
         this.fileName = file.getAbsolutePath();
 
 
