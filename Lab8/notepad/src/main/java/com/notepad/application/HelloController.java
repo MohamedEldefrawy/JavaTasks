@@ -65,7 +65,6 @@ public class HelloController implements Initializable {
         openFileDialog = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
 
-
         if (!(txtNotePadArea.getText().isEmpty())) {
 
             Optional<ButtonType> result = alertDialog.showAndWait();
