@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -40,6 +41,8 @@ public class HelloController implements Initializable {
     public MenuItem btnPast;
     public MenuItem btnCopy;
     public MenuItem btnDelete;
+    public MenuItem btnSelectAll;
+    public MenuItem btnGetTimeDate;
     private Stage stage;
     private File currentFile;
     private String selectedText;
@@ -67,6 +70,8 @@ public class HelloController implements Initializable {
         btnPast.setOnAction(actionEvent -> btnPastClicked());
         btnCopy.setOnAction(actionEvent -> btnCopyClicked());
         btnDelete.setOnAction(actionEvent -> btnDeleteClicked());
+        btnSelectAll.setOnAction(actionEvent -> btnSelectAllClicked());
+        btnGetTimeDate.setOnAction(actionEvent -> btnGetTimeDateClicked());
 
         btnNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         btnOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -74,6 +79,7 @@ public class HelloController implements Initializable {
         btnPrint.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN));
         btnNewWindow.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN));
         btnSaveAs.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN));
+        btnGetTimeDate.setAccelerator(new KeyCodeCombination(KeyCode.F5));
     }
 
 
@@ -183,6 +189,14 @@ public class HelloController implements Initializable {
         } else {
             txtNotePadArea.deleteNextChar();
         }
+    }
+
+    public void btnSelectAllClicked() {
+        txtNotePadArea.selectAll();
+    }
+
+    public void btnGetTimeDateClicked() {
+        txtNotePadArea.appendText(LocalDateTime.now().toString());
     }
 
 
