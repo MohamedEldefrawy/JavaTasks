@@ -43,6 +43,7 @@ public class HelloController implements Initializable {
     public MenuItem btnDelete;
     public MenuItem btnSelectAll;
     public MenuItem btnGetTimeDate;
+    public MenuItem btnAbout;
     private Stage stage;
     private File currentFile;
     private String selectedText;
@@ -72,6 +73,7 @@ public class HelloController implements Initializable {
         btnDelete.setOnAction(actionEvent -> btnDeleteClicked());
         btnSelectAll.setOnAction(actionEvent -> btnSelectAllClicked());
         btnGetTimeDate.setOnAction(actionEvent -> btnGetTimeDateClicked());
+        btnAbout.setOnAction(actionEvent -> btnAboutClicked());
 
         btnNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         btnOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -205,6 +207,9 @@ public class HelloController implements Initializable {
         txtNotePadArea.appendText(LocalDateTime.now().toString());
     }
 
+    public void btnAboutClicked() {
+        createInfoDialog().show();
+    }
 
     // Helpers
     private File createFileDialog(Dialogs dialogType) {
@@ -238,6 +243,14 @@ public class HelloController implements Initializable {
 
         alertDialog.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
+        return alertDialog;
+    }
+
+    private Alert createInfoDialog() {
+        alertDialog = new Alert(Alert.AlertType.INFORMATION);
+        alertDialog.setContentText("");
+        alertDialog.setTitle("About");
+        alertDialog.setHeaderText("Note Justsu Developed my Mohamed Eldefrawy");
         return alertDialog;
     }
 
