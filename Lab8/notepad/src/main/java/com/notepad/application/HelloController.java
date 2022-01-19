@@ -25,7 +25,6 @@ public class HelloController implements Initializable {
     // Fields
     public MenuItem btnNew;
     public TextArea txtNotePadArea;
-    public Alert alertDialog;
     public MenuItem btnOpen;
     public MenuItem btnNewWindow;
     public MenuItem btnSave;
@@ -71,6 +70,8 @@ public class HelloController implements Initializable {
         btnSelectAll.setOnAction(actionEvent -> btnSelectAllClicked());
         btnGetTimeDate.setOnAction(actionEvent -> btnGetTimeDateClicked());
         btnAbout.setOnAction(actionEvent -> btnAboutClicked());
+        HelloApplication.getStage().setOnCloseRequest(windowEvent -> closeSceneClicked());
+
 
         btnNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         btnOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -85,6 +86,8 @@ public class HelloController implements Initializable {
         btnCut.setAccelerator(new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN));
         btnSelectAll.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
         btnDelete.setAccelerator(new KeyCodeCombination(KeyCode.DELETE));
+
+
     }
 
 
@@ -147,20 +150,7 @@ public class HelloController implements Initializable {
         }
     }
     public void btnExitClicked() {
-        if (txtNotePadArea.getText().isEmpty()) {
-            Platform.exit();
-        } else {
-            AlertsGenerator.createConfirmationDialog();
-            Optional<ButtonType> result = alertDialog.showAndWait();
-
-            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                saveAsFile();
-            } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO) {
-                Platform.exit();
-            } else if (result.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
-                alertDialog.close();
-            }
-        }
+        ExitApplication();
 
     }
     public void btnUndoClicked() {
@@ -183,14 +173,21 @@ public class HelloController implements Initializable {
             txtNotePadArea.deleteNextChar();
         }
     }
+
     public void btnSelectAllClicked() {
         txtNotePadArea.selectAll();
     }
+
     public void btnGetTimeDateClicked() {
         txtNotePadArea.appendText(LocalDateTime.now().toString());
     }
+
     public void btnAboutClicked() {
         AlertsGenerator.createInfoDialog().show();
+    }
+
+    public void closeSceneClicked() {
+        ExitApplication();
     }
 
     // Helpers
@@ -201,6 +198,26 @@ public class HelloController implements Initializable {
             txtNotePadArea.setText(reader.fileContent());
         }
     }
+
+    private void ExitApplication() {
+        Alert alertDialog;
+
+        if (txtNotePadArea.getText().isEmpty()) {
+            Platform.exit();
+        } else {
+            alertDialog = AlertsGenerator.createConfirmationDialog();
+            Optional<ButtonType> result = alertDialog.showAndWait();
+
+            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                saveAsFile();
+            } else if (result.get().getButtonData() == ButtonBar.ButtonData.NO) {
+                Platform.exit();
+            } else if (result.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                alertDialog.close();
+            }
+        }
+    }
+
     private void saveAsFile() {
         currentFile = FileDialogsGenerator.createFileDialog(Dialogs.SAVE);
         if (currentFile != null) {
@@ -210,6 +227,7 @@ public class HelloController implements Initializable {
             HelloApplication.getStage().setTitle(currentFile.getName().substring(0, currentFile.getName().length() - 4));
         }
     }
+
     private void print(PrinterJob job, Node node) {
         // Print the node
         boolean printed = job.printPage(node);
@@ -222,7 +240,7 @@ public class HelloController implements Initializable {
 
     // Event Handlers
     private void btnNewHandler() {
-
+        Alert alertDialog;
         alertDialog = AlertsGenerator.createConfirmationDialog();
 
         if (!(txtNotePadArea.getText().isEmpty())) {
@@ -245,7 +263,7 @@ public class HelloController implements Initializable {
             this.txtNotePadArea.clear();
     }
     private void btnOpenHandler() {
-
+        Alert alertDialog;
         alertDialog = AlertsGenerator.createConfirmationDialog();
 
         if (!(txtNotePadArea.getText().isEmpty())) {
